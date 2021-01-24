@@ -77,5 +77,14 @@ namespace TDD.Katas.UnitTests
         {
             calc.Add(input).Should().Be(5);
         }
+
+        [Theory]
+        [InlineData("//###\n1###1###1###1###1")]
+        [InlineData("//**\n1**1**1**1**1")]
+        [InlineData("//zzzzz\n1zzzzz1zzzzz1zzzzz1zzzzz1")]
+        public void MultipleCharDelimiterShouldBeAccepted(string input)
+        {
+            calc.Add(input).Should().Be(5);
+        }
     }
 }

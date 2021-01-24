@@ -6,6 +6,7 @@ namespace TDD_Katas.Katas.StringCalculator
     public class StringCalculator
     {
         private List<int> numbers = new List<int>();
+        private string input = string.Empty;
 
         public int Add(string input)
         {
@@ -13,9 +14,7 @@ namespace TDD_Katas.Katas.StringCalculator
                 return 0;
 
             ParseInput(input);
-
             CheckForNegatives();
-
             RemoveNumbersOver1000();
 
             return Sum(numbers);
@@ -51,31 +50,59 @@ namespace TDD_Katas.Katas.StringCalculator
 
         private void ParseInput(string input)
         {
-            foreach (var stringNumber in ParseInputToStringArray(input))
+            this.input = input;
+            foreach (var stringNumber in ParseInputToStringArray())
             {
                 numbers.Add(int.Parse(stringNumber));
             }
         }
 
-        private static string[] ParseInputToStringArray(string input)
+        private string[] ParseInputToStringArray()
         {
-            var delimiters = new HashSet<char> { ',', '\n' };
+            var delimiters = new HashSet<string> { ",", "\n" };
 
-            if(TryGetCustomDelimiter(input, out char cd))
+            if (TryGetCustomDelimiter(out string customDelim))
             {
-                delimiters.Add(cd);
-                return input[3..].Split(delimiters.ToArray());
+                delimiters.Add(customDelim);
+                RemoveDelimiterInfoFromInput(customDelim);
             }
 
-            return input.Split(delimiters.ToArray());
+            return SplitInput(delimiters);
         }
 
-        private static bool TryGetCustomDelimiter(string input, out char customDelimiter)
+        private string[] SplitInput(HashSet<string> delimiters)
         {
-            customDelimiter = char.MinValue;
+            return input.Split(delimiters.ToArray(), System.StringSplitOptions.None);
+        }
+
+        private void RemoveDelimiterInfoFromInput(string delimiter)
+        {
+            if (IsSingleCharDelimiter(delimiter))
+                input = input[3..];
+            else
+                input = input[(3 + delimiter.Length)..];
+        }
+
+        private static bool IsSingleCharDelimiter(string cd)
+        {
+            return cd.Length == 1;
+        }
+
+        private bool TryGetCustomDelimiter(out string customDelimiter)
+        {
+            customDelimiter = string.Empty;
             if (input.StartsWith("//"))
             {
-                customDelimiter = input[2];
+                var delimiterEndIndex = input.IndexOf('\n');
+
+                if(delimiterEndIndex > -1)
+                {
+                    customDelimiter = input[2..delimiterEndIndex];
+                }
+                else
+                {
+                    customDelimiter = input[2].ToString();
+                }
                 return true;
             }
 
