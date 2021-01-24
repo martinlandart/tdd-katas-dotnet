@@ -1,13 +1,16 @@
-﻿namespace TDD_Katas.Katas.Greeter
+﻿using System.Globalization;
+
+namespace TDD_Katas.Katas.Greeter
 {
     public static class GreeterStringExtensions
     {
-        public static string CapitalizeFirstLetter(this string value)
+        public static string ToTitleCase(this string value)
         {
-            return value[0].ToString().ToUpper() + value[1..];
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+            return textInfo.ToTitleCase(value);
         }
 
-        public static string PrependGreetingMessage(this string value, string greetingMessage)
+        public static string Prepend(this string value, string greetingMessage)
         {
             return $"{greetingMessage} {value}";
         }

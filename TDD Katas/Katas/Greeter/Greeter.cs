@@ -32,8 +32,8 @@ namespace TDD.Katas.GreeterKata
 
             return name
                 .Trim()
-                .CapitalizeFirstLetter()
-                .PrependGreetingMessage(GetGreetingMessage());
+                .ToTitleCase()
+                .Prepend(GetGreetingMessage());
         }
 
         private string GetGreetingMessage()

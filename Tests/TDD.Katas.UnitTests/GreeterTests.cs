@@ -65,29 +65,29 @@ namespace TDD.Katas.UnitTests
         }
 
         [Fact]
-        public void GreetGoodMorningShouldCapitalizeName()
+        public void GreetGoodMorningShouldTitleCaseName()
         {
             SetMorningTime();
-            AssertCapitalizedName(goodMorningGreet);
+            AssertTitleCaseName(goodMorningGreet);
         }
 
         [Fact]
-        public void GreetGoodEveningShouldCapitalizeName()
+        public void GreetGoodEveningShouldTitleCaseName()
         {
             SetEveningTime();
-            AssertCapitalizedName(goodEveningGreet);
+            AssertTitleCaseName(goodEveningGreet);
         }
 
         [Fact]
-        public void GreetGoodNightShouldCapitalizeName()
+        public void GreetGoodNightShouldTitleCaseName()
         {
             SetNightTime();
-            AssertCapitalizedName(goodNightGreet);
+            AssertTitleCaseName(goodNightGreet);
         }
 
-        private void AssertCapitalizedName(string greeting)
+        private void AssertTitleCaseName(string greeting)
         {
-            greeter.Greet("martin").Should().Be($"{greeting} Martin");
+            greeter.Greet("martin landart").Should().Be($"{greeting} Martin Landart");
         }
 
         [Fact]
