@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Kernel\TDD.Kernel.csproj" />
+    <ProjectReference Include="..\TDD.Kernel\TDD.Kernel.csproj" />
   </ItemGroup>
 
 </Project>
