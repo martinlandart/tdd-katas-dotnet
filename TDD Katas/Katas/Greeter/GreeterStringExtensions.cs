@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace TDD_Katas.Katas.Greeter
+namespace TDD.Katas.GreeterKata
 {
     public static class GreeterStringExtensions
     {

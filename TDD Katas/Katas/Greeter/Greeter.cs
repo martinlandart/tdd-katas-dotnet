@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using TDD.Kernel;
-using TDD_Katas.Katas.Greeter;
 
 namespace TDD.Katas.GreeterKata
 {
@@ -24,10 +23,7 @@ namespace TDD.Katas.GreeterKata
         {
             logger.LogInformation($"Greeting {name}");
 
-            return name
-                .Trim()
-                .ToTitleCase()
-                .Prepend(GetGreetingMessage());
+            return $"{GetGreetingMessage()} {name.Trim().ToTitleCase()}";
         }
 
         private string GetGreetingMessage()
