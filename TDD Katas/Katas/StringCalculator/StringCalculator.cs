@@ -91,22 +91,41 @@ namespace TDD_Katas.Katas.StringCalculator
         private bool TryGetCustomDelimiter(out string customDelimiter)
         {
             customDelimiter = string.Empty;
-            if (input.StartsWith("//"))
+            if (CustomDelimiterIsDefined())
             {
-                var delimiterEndIndex = input.IndexOf('\n');
-
-                if(delimiterEndIndex > -1)
-                {
-                    customDelimiter = input[2..delimiterEndIndex];
-                }
+                var delimiterEndIndex = GetMulticharacterDelimiterEndIndex();
+                if (IsMulticharacterDelimiter(delimiterEndIndex))
+                    customDelimiter = GetMultiCharacterDelimiter(delimiterEndIndex);
                 else
-                {
-                    customDelimiter = input[2].ToString();
-                }
+                    customDelimiter = GetSingleCharacterDelimiter();
                 return true;
             }
-
             return false;
+        }
+
+        private string GetSingleCharacterDelimiter()
+        {
+            return input[2].ToString();
+        }
+
+        private static bool IsMulticharacterDelimiter(int delimiterEndIndex)
+        {
+            return delimiterEndIndex > -1;
+        }
+
+        private int GetMulticharacterDelimiterEndIndex()
+        {
+            return input.IndexOf('\n');
+        }
+
+        private string GetMultiCharacterDelimiter(int delimiterEndIndex)
+        {
+            return input[2..delimiterEndIndex];
+        }
+
+        private bool CustomDelimiterIsDefined()
+        {
+            return input.StartsWith("//");
         }
 
         private static bool IsEmptyInput(string input)
