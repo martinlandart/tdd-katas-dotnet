@@ -59,7 +59,27 @@ namespace TDD_Katas.Katas.StringCalculator
 
         private static string[] ParseInputToStringArray(string input)
         {
-            return input.Split(new char[] { ',', '\n' });
+            var delimiters = new HashSet<char> { ',', '\n' };
+
+            if(TryGetCustomDelimiter(input, out char cd))
+            {
+                delimiters.Add(cd);
+                return input[3..].Split(delimiters.ToArray());
+            }
+
+            return input.Split(delimiters.ToArray());
+        }
+
+        private static bool TryGetCustomDelimiter(string input, out char customDelimiter)
+        {
+            customDelimiter = char.MinValue;
+            if (input.StartsWith("//"))
+            {
+                customDelimiter = input[2];
+                return true;
+            }
+
+            return false;
         }
 
         private static bool IsEmptyInput(string input)
