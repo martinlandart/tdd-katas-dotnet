@@ -94,21 +94,21 @@ namespace TDD_Katas.Katas.StringCalculator
             if (CustomDelimiterIsDefined())
             {
                 var delimiterEndIndex = GetMulticharacterDelimiterEndIndex();
-                if (IsMulticharacterDelimiter(delimiterEndIndex))
+                if (IsMulticharacterCustomDelimiter(delimiterEndIndex))
                     customDelimiter = GetMultiCharacterDelimiter(delimiterEndIndex);
                 else
-                    customDelimiter = GetSingleCharacterDelimiter();
+                    customDelimiter = GetSingleCharacterCustomDelimiter();
                 return true;
             }
             return false;
         }
 
-        private string GetSingleCharacterDelimiter()
+        private string GetSingleCharacterCustomDelimiter()
         {
             return input[2].ToString();
         }
 
-        private static bool IsMulticharacterDelimiter(int delimiterEndIndex)
+        private static bool IsMulticharacterCustomDelimiter(int delimiterEndIndex)
         {
             return delimiterEndIndex > -1;
         }
