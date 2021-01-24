@@ -6,23 +6,28 @@ namespace TDD_Katas.Katas.StringCalculator
     public class StringCalculator
     {
         private List<int> numbers = new List<int>();
-        private string input = string.Empty;
 
         public int Add(string input)
         {
             if (IsEmptyInput(input))
                 return 0;
 
-            ParseInput(input);
+            numbers = new InputParser(input).Parse().ToList();
+
             CheckForNegatives();
             RemoveNumbersOver1000();
 
             return Sum(numbers);
         }
 
+        private static bool IsEmptyInput(string input)
+        {
+            return string.IsNullOrEmpty(input);
+        }
+
         private void RemoveNumbersOver1000()
         {
-            this.numbers = this.numbers.Where(n => n < 1000).ToList();
+            numbers = this.numbers.Where(n => n < 1000).ToList();
         }
 
         private void CheckForNegatives()
@@ -48,89 +53,96 @@ namespace TDD_Katas.Katas.StringCalculator
             return result;
         }
 
-        private void ParseInput(string input)
+        private class InputParser
         {
-            this.input = input;
-            foreach (var stringNumber in ParseInputToStringArray())
-            {
-                numbers.Add(int.Parse(stringNumber));
-            }
-        }
+            private string input = string.Empty;
 
-        private string[] ParseInputToStringArray()
-        {
-            var delimiters = new HashSet<string> { ",", "\n" };
-
-            if (TryGetCustomDelimiter(out string customDelim))
+            public InputParser(string input)
             {
-                delimiters.Add(customDelim);
-                RemoveDelimiterInfoFromInput(customDelim);
+                this.input = input;
             }
 
-            return SplitInput(delimiters);
-        }
-
-        private string[] SplitInput(HashSet<string> delimiters)
-        {
-            return input.Split(delimiters.ToArray(), System.StringSplitOptions.None);
-        }
-
-        private void RemoveDelimiterInfoFromInput(string delimiter)
-        {
-            if (IsSingleCharDelimiter(delimiter))
-                input = input[3..];
-            else
-                input = input[(3 + delimiter.Length)..];
-        }
-
-        private static bool IsSingleCharDelimiter(string cd)
-        {
-            return cd.Length == 1;
-        }
-
-        private bool TryGetCustomDelimiter(out string customDelimiter)
-        {
-            customDelimiter = string.Empty;
-            if (CustomDelimiterIsDefined())
+            public IEnumerable<int> Parse()
             {
-                var delimiterEndIndex = GetMulticharacterDelimiterEndIndex();
-                if (IsMulticharacterCustomDelimiter(delimiterEndIndex))
-                    customDelimiter = GetMultiCharacterDelimiter(delimiterEndIndex);
+                var numbers = new List<int>();
+                foreach (var stringNumber in ParseInputToStringArray())
+                {
+                    numbers.Add(int.Parse(stringNumber));
+                }
+
+                return numbers;
+            }
+
+            private string[] ParseInputToStringArray()
+            {
+                var delimiters = new HashSet<string> { ",", "\n" };
+
+                if (TryGetCustomDelimiter(out string customDelim))
+                {
+                    delimiters.Add(customDelim);
+                    RemoveDelimiterInfoFromInput(customDelim);
+                }
+
+                return SplitInput(delimiters);
+            }
+
+            private string[] SplitInput(HashSet<string> delimiters)
+            {
+                return input.Split(delimiters.ToArray(), System.StringSplitOptions.None);
+            }
+
+            private void RemoveDelimiterInfoFromInput(string delimiter)
+            {
+                if (IsSingleCharDelimiter(delimiter))
+                    input = input[3..];
                 else
-                    customDelimiter = GetSingleCharacterCustomDelimiter();
-                return true;
+                    input = input[(3 + delimiter.Length)..];
             }
-            return false;
-        }
 
-        private string GetSingleCharacterCustomDelimiter()
-        {
-            return input[2].ToString();
-        }
+            private static bool IsSingleCharDelimiter(string cd)
+            {
+                return cd.Length == 1;
+            }
 
-        private static bool IsMulticharacterCustomDelimiter(int delimiterEndIndex)
-        {
-            return delimiterEndIndex > -1;
-        }
+            private bool TryGetCustomDelimiter(out string customDelimiter)
+            {
+                customDelimiter = string.Empty;
+                if (CustomDelimiterIsDefined())
+                {
+                    var delimiterEndIndex = GetMulticharacterDelimiterEndIndex();
+                    if (IsMulticharacterCustomDelimiter(delimiterEndIndex))
+                        customDelimiter = GetMultiCharacterDelimiter(delimiterEndIndex);
+                    else
+                        customDelimiter = GetSingleCharacterCustomDelimiter();
+                    return true;
+                }
+                return false;
+            }
 
-        private int GetMulticharacterDelimiterEndIndex()
-        {
-            return input.IndexOf('\n');
-        }
+            private string GetSingleCharacterCustomDelimiter()
+            {
+                return input[2].ToString();
+            }
 
-        private string GetMultiCharacterDelimiter(int delimiterEndIndex)
-        {
-            return input[2..delimiterEndIndex];
-        }
+            private static bool IsMulticharacterCustomDelimiter(int delimiterEndIndex)
+            {
+                return delimiterEndIndex > -1;
+            }
 
-        private bool CustomDelimiterIsDefined()
-        {
-            return input.StartsWith("//");
-        }
+            private int GetMulticharacterDelimiterEndIndex()
+            {
+                return input.IndexOf('\n');
+            }
 
-        private static bool IsEmptyInput(string input)
-        {
-            return string.IsNullOrEmpty(input);
+            private string GetMultiCharacterDelimiter(int delimiterEndIndex)
+            {
+                return input[2..delimiterEndIndex];
+            }
+
+            private bool CustomDelimiterIsDefined()
+            {
+                return input.StartsWith("//");
+            }
         }
     }
 }
