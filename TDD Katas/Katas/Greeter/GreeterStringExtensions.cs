@@ -9,10 +9,5 @@ namespace TDD.Katas.GreeterKata
             TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
             return textInfo.ToTitleCase(value);
         }
-
-        public static string Prepend(this string value, string greetingMessage)
-        {
-            return $"{greetingMessage} {value}";
-        }
     }
 }
