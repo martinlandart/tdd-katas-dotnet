@@ -4,6 +4,6 @@ namespace TDD.Kernel
 {
     public interface IDateTime
     {
-        DateTime UtcNow();
+        DateTime UtcNow { get; }
     }
 }

@@ -28,22 +28,19 @@ namespace TDD.Katas.GreeterKata
 
         private string GetGreetingMessage()
         {
-            if (IsMorning())
-                return "Good Morning";
-            if (IsEvening())
-                return "Good Evening";
-            else
-                return "Good Night";
+            if (IsMorning()) return "Good Morning";
+            if (IsEvening()) return "Good Evening";
+            return "Good Night";
         }
 
         private bool IsEvening()
         {
-            return dateTime.UtcNow().Hour >= eveningStart && dateTime.UtcNow().Hour < nightStart;
+            return dateTime.UtcNow.Hour >= eveningStart && dateTime.UtcNow.Hour < nightStart;
         }
 
         private bool IsMorning()
         {
-            return dateTime.UtcNow().Hour >= morningStart && dateTime.UtcNow().Hour < eveningStart;
+            return dateTime.UtcNow.Hour >= morningStart && dateTime.UtcNow.Hour < eveningStart;
         }
     }
 }

@@ -9,25 +9,20 @@ namespace TDD_Katas.Katas.StringCalculator
 
         public int Add(string input)
         {
-            if (IsEmptyInput(input))
+            if (string.IsNullOrEmpty(input))
                 return 0;
 
             numbers = new InputParser(input).Parse().ToList();
 
             CheckForNegatives();
-            RemoveNumbersOver1000();
+            RemoveNumbersOverThreshold(1000);
 
             return Sum(numbers);
         }
 
-        private static bool IsEmptyInput(string input)
+        private void RemoveNumbersOverThreshold(int threshold)
         {
-            return string.IsNullOrEmpty(input);
-        }
-
-        private void RemoveNumbersOver1000()
-        {
-            numbers = this.numbers.Where(n => n < 1000).ToList();
+            numbers = this.numbers.Where(n => n < threshold).ToList();
         }
 
         private void CheckForNegatives()

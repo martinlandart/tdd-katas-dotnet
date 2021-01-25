@@ -11,7 +11,7 @@ namespace TDD.Kernel.UnitTests
         {
             var dateTimeService = new DateTimeService();
 
-            dateTimeService.UtcNow().Should().BeCloseTo(DateTime.UtcNow, 1000);
+            dateTimeService.UtcNow.Should().BeCloseTo(DateTime.UtcNow, 1000);
         }
     }
 }

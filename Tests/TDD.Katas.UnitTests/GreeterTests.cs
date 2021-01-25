@@ -152,7 +152,7 @@ namespace TDD.Katas.UnitTests
         private void SetCurrentTime(int hours, int minutes)
         {
             var dateTime = new DateTime().AddHours(hours).AddMinutes(minutes);
-            var time = dateTimeMock.Setup(d => d.UtcNow()).Returns(dateTime);
+            var time = dateTimeMock.Setup(d => d.UtcNow).Returns(dateTime);
         }
     }
 }
